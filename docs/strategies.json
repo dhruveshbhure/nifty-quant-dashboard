@@ -1,0 +1,169 @@
+{
+  "goldilocks": {
+    "metrics": {
+      "total_trades": 11,
+      "win_rate": 90.9,
+      "losing_trades": 1,
+      "net_pnl": 37668.1,
+      "gross_pnl": 42508.1,
+      "roi": 94.17,
+      "ending_equity": 77668.1,
+      "max_dd": -4.59,
+      "max_dd_inr": -3738.75,
+      "profit_factor": 11.08
+    },
+    "chart": {
+      "dates": [
+        "2026-05-14",
+        "2026-05-20",
+        "2026-05-21",
+        "2026-06-01",
+        "2026-06-02",
+        "2026-06-04",
+        "2026-06-08",
+        "2026-06-09",
+        "2026-06-11",
+        "2026-06-12",
+        "2026-06-19"
+      ],
+      "roi": [
+        9.45,
+        18.64,
+        32.72,
+        49.92,
+        57.67,
+        71.25,
+        81.08,
+        89.74,
+        96.91,
+        103.52,
+        94.17
+      ],
+      "drawdown": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -4.59
+      ]
+    },
+    "trades": [
+      {
+        "Date": "2026-05-14",
+        "Type": "Bear Call",
+        "ADX": 18.28,
+        "Status": "Target (Max Profit)",
+        "Gross_Pts": 64.9,
+        "Net_Pts": 60.9,
+        "Gross_PnL": 4218.53,
+        "Net_PnL": 3778.53
+      },
+      {
+        "Date": "2026-05-20",
+        "Type": "Bull Put",
+        "ADX": 18.0,
+        "Status": "Target (Max Profit)",
+        "Gross_Pts": 63.35,
+        "Net_Pts": 59.35,
+        "Gross_PnL": 4117.72,
+        "Net_PnL": 3677.72
+      },
+      {
+        "Date": "2026-05-21",
+        "Type": "Bear Call",
+        "ADX": 18.42,
+        "Status": "Target (Max Profit)",
+        "Gross_Pts": 93.4,
+        "Net_Pts": 89.4,
+        "Gross_PnL": 6071.03,
+        "Net_PnL": 5631.03
+      },
+      {
+        "Date": "2026-06-01",
+        "Type": "Bear Call",
+        "ADX": 16.36,
+        "Status": "Target (Max Profit)",
+        "Gross_Pts": 112.6,
+        "Net_Pts": 108.6,
+        "Gross_PnL": 7318.97,
+        "Net_PnL": 6878.97
+      },
+      {
+        "Date": "2026-06-02",
+        "Type": "Bull Put",
+        "ADX": 17.1,
+        "Status": "Target (Max Profit)",
+        "Gross_Pts": 54.5,
+        "Net_Pts": 50.5,
+        "Gross_PnL": 3542.5,
+        "Net_PnL": 3102.5
+      },
+      {
+        "Date": "2026-06-04",
+        "Type": "Bull Put",
+        "ADX": 19.14,
+        "Status": "Time (Win)",
+        "Gross_Pts": 90.32,
+        "Net_Pts": 86.32,
+        "Gross_PnL": 5870.82,
+        "Net_PnL": 5430.82
+      },
+      {
+        "Date": "2026-06-08",
+        "Type": "Bull Put",
+        "ADX": 20.77,
+        "Status": "Target (Max Profit)",
+        "Gross_Pts": 67.25,
+        "Net_Pts": 63.25,
+        "Gross_PnL": 4371.25,
+        "Net_PnL": 3931.25
+      },
+      {
+        "Date": "2026-06-09",
+        "Type": "Bear Call",
+        "ADX": 21.9,
+        "Status": "Target (Max Profit)",
+        "Gross_Pts": 60.05,
+        "Net_Pts": 56.05,
+        "Gross_PnL": 3903.3,
+        "Net_PnL": 3463.3
+      },
+      {
+        "Date": "2026-06-11",
+        "Type": "Bull Put",
+        "ADX": 23.08,
+        "Status": "Target (Max Profit)",
+        "Gross_Pts": 50.95,
+        "Net_Pts": 46.95,
+        "Gross_PnL": 3311.7,
+        "Net_PnL": 2871.7
+      },
+      {
+        "Date": "2026-06-12",
+        "Type": "Bear Call",
+        "ADX": 23.56,
+        "Status": "Target (Max Profit)",
+        "Gross_Pts": 47.4,
+        "Net_Pts": 43.4,
+        "Gross_PnL": 3081.03,
+        "Net_PnL": 2641.03
+      },
+      {
+        "Date": "2026-06-19",
+        "Type": "Bull Put",
+        "ADX": 19.58,
+        "Status": "SL (Max Loss)",
+        "Gross_Pts": -50.75,
+        "Net_Pts": -54.75,
+        "Gross_PnL": -3298.75,
+        "Net_PnL": -3738.75
+      }
+    ]
+  }
+}

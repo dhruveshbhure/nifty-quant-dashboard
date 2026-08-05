@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nifty Quantitative Strategy Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen p-6">
+  <div class="max-w-7xl mx-auto space-y-6">
+    
+    <!-- Header & Dropdown -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gray-800 p-6 rounded-xl border border-gray-700">
+      <div>
+        <h1 class="text-2xl font-bold text-white">Nifty Intraday Quantitative Dashboard</h1>
+        <p class="text-sm text-gray-400">Live Backtest Analytics & Regime Filtering</p>
+      </div>
+      <div>
+        <label for="strategySelect" class="block text-xs text-gray-400 mb-1 font-semibold uppercase">Select Strategy Regime</label>
+        <select id="strategySelect" class="bg-gray-900 border border-gray-600 text-white rounded-lg p-2.5 text-sm focus:ring-purple-500 focus:border-purple-500">
+          <!-- Options filled from strategies.json -->
+        </select>
+      </div>
+    </div>
+
+    <!-- Summary Metrics Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+      <div class="bg-gray-800 p-4 rounded-xl border border-gray-700">
+        <p class="text-xs text-gray-400 font-medium uppercase">Net ROI</p>
+        <p id="metricRoi" class="text-2xl font-extrabold text-green-400">0%</p>
+      </div>
+      <div class="bg-gray-800 p-4 rounded-xl border border-gray-700">
+        <p class="text-xs text-gray-400 font-medium uppercase">Win Rate</p>
+        <p id="metricWinRate" class="text-2xl font-extrabold text-purple-400">0%</p>
+      </div>
+      <div class="bg-gray-800 p-4 rounded-xl border border-gray-700">
+        <p class="text-xs text-gray-400 font-medium uppercase">Net PnL (INR)</p>
+        <p id="metricPnl" class="text-2xl font-extrabold text-white">₹0</p>
+      </div>
+      <div class="bg-gray-800 p-4 rounded-xl border border-gray-700">
+        <p class="text-xs text-gray-400 font-medium uppercase">Max Drawdown</p>
+        <p id="metricDd" class="text-2xl font-extrabold text-red-400">0%</p>
+      </div>
+      <div class="bg-gray-800 p-4 rounded-xl border border-gray-700">
+        <p class="text-xs text-gray-400 font-medium uppercase">Total Trades</p>
+        <p id="metricTrades" class="text-2xl font-extrabold text-gray-200">0</p>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+        <h2 class="text-sm font-semibold text-gray-300 mb-4">Cumulative ROI (%)</h2>
+        <canvas id="roiChart" class="max-h-64"></canvas>
+      </div>
+      <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+        <h2 class="text-sm font-semibold text-gray-300 mb-4">Underwater Drawdown (%)</h2>
+        <canvas id="ddChart" class="max-h-64"></canvas>
+      </div>
+    </div>
+
+    <!-- Trade Log Table -->
+    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 overflow-x-auto">
+      <h2 class="text-sm font-semibold text-gray-300 mb-4">Trade Execution Log</h2>
+      <table class="w-full text-left text-sm text-gray-400">
+        <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+          <tr>
+            <th class="p-3">Date</th>
+            <th class="p-3">Instrument</th>
+            <th class="p-3">ADX</th>
+            <th class="p-3">Status</th>
+            <th class="p-3">Net Pts</th>
+            <th class="p-3">Net PnL (₹)</th>
+          </tr>
+        </thead>
+        <tbody id="tradeTableBody" class="divide-y divide-gray-700"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script>
+    let rawData = {};
+    let roiChartObj = null;
+    let ddChartObj = null;
+
+    // Labels only for strategies that actually exist in strategies.json
+    const STRATEGY_LABELS = {
+      goldilocks: '⭐ ADX Goldilocks (15 - 25)',
+    };
+
+    function populateStrategySelect(keys) {
+      const select = document.getElementById('strategySelect');
+      select.innerHTML = '';
+      keys.forEach((key, i) => {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = STRATEGY_LABELS[key] || key;
+        if (i === 0) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    async function loadDashboard() {
+      const res = await fetch('strategies.json');
+      rawData = await res.json();
+      const keys = Object.keys(rawData).filter(k => rawData[k] && rawData[k].metrics);
+      if (!keys.length) return;
+      populateStrategySelect(keys);
+      updateDashboard(keys[0]);
+    }
+
+    function updateDashboard(key) {
+      const data = rawData[key];
+      if (!data || !data.metrics) return;
+
+      // Metrics
+      document.getElementById('metricRoi').innerText = data.metrics.roi + '%';
+      document.getElementById('metricWinRate').innerText = data.metrics.win_rate + '%';
+      document.getElementById('metricPnl').innerText = '₹' + data.metrics.net_pnl.toLocaleString('en-IN');
+      document.getElementById('metricDd').innerText = data.metrics.max_dd + '%';
+      document.getElementById('metricTrades').innerText = data.metrics.total_trades;
+
+      // Render Charts
+      renderCharts(data.chart);
+
+      // Render Table
+      const tbody = document.getElementById('tradeTableBody');
+      tbody.innerHTML = '';
+      data.trades.forEach(t => {
+        const row = `<tr class="border-b border-gray-700 hover:bg-gray-750">
+          <td class="p-3">${t.Date}</td>
+          <td class="p-3 text-white font-medium">${t.Type}</td>
+          <td class="p-3">${t.ADX}</td>
+          <td class="p-3"><span class="px-2 py-1 rounded text-xs font-semibold ${t.Net_PnL > 0 ? 'bg-green-900 text-green-300' : 'bg-red-900 text-red-300'}">${t.Status}</span></td>
+          <td class="p-3">${t.Net_Pts}</td>
+          <td class="p-3 font-semibold ${t.Net_PnL > 0 ? 'text-green-400' : 'text-red-400'}">₹${t.Net_PnL.toLocaleString('en-IN')}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function renderCharts(c) {
+      if (roiChartObj) roiChartObj.destroy();
+      if (ddChartObj) ddChartObj.destroy();
+
+      const ctxRoi = document.getElementById('roiChart').getContext('2d');
+      roiChartObj = new Chart(ctxRoi, {
+        type: 'line',
+        data: {
+          labels: c.dates,
+          datasets: [{ label: 'ROI %', data: c.roi, borderColor: '#a855f7', backgroundColor: 'rgba(168,85,247,0.1)', fill: true, tension: 0.2 }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+      });
+
+      const ctxDd = document.getElementById('ddChart').getContext('2d');
+      ddChartObj = new Chart(ctxDd, {
+        type: 'line',
+        data: {
+          labels: c.dates,
+          datasets: [{ label: 'Drawdown %', data: c.drawdown, borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,0.2)', fill: true, tension: 0.2 }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+      });
+    }
+
+    document.getElementById('strategySelect').addEventListener('change', (e) => updateDashboard(e.target.value));
+    loadDashboard();
+  </script>
+</body>
+</html>
