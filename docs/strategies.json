@@ -1,16 +1,16 @@
 {
   "goldilocks": {
     "metrics": {
-      "total_trades": 12,
-      "win_rate": 83.3,
-      "losing_trades": 2,
-      "net_pnl": 32635.82,
-      "gross_pnl": 37915.82,
-      "roi": 81.59,
-      "ending_equity": 72635.82,
-      "max_dd": -10.77,
-      "max_dd_inr": -8771.03,
-      "profit_factor": 4.72
+      "total_trades": 13,
+      "win_rate": 76.9,
+      "losing_trades": 3,
+      "net_pnl": 28419.35,
+      "gross_pnl": 34139.35,
+      "roi": 71.05,
+      "ending_equity": 68419.35,
+      "max_dd": -15.95,
+      "max_dd_inr": -12987.5,
+      "profit_factor": 3.19
     },
     "chart": {
       "dates": [
@@ -25,7 +25,8 @@
         "2026-06-11",
         "2026-06-12",
         "2026-06-19",
-        "2026-09-02"
+        "2026-09-02",
+        "2026-09-03"
       ],
       "roi": [
         9.45,
@@ -39,7 +40,8 @@
         96.91,
         103.52,
         94.17,
-        81.59
+        81.59,
+        71.05
       ],
       "drawdown": [
         0.0,
@@ -53,7 +55,8 @@
         0.0,
         0.0,
         -4.59,
-        -10.77
+        -10.77,
+        -15.95
       ]
     },
     "trades": [
@@ -176,6 +179,16 @@
         "Net_Pts": -74.65,
         "Gross_PnL": -4592.28,
         "Net_PnL": -5032.28
+      },
+      {
+        "Date": "2026-09-03",
+        "Type": "Bear Call",
+        "ADX": 19.07,
+        "Status": "SL (Max Loss)",
+        "Gross_Pts": -58.1,
+        "Net_Pts": -62.1,
+        "Gross_PnL": -3776.47,
+        "Net_PnL": -4216.47
       }
     ]
   }
