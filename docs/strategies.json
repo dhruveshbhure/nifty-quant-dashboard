@@ -1,16 +1,16 @@
 {
   "goldilocks": {
     "metrics": {
-      "total_trades": 13,
-      "win_rate": 76.9,
-      "losing_trades": 3,
-      "net_pnl": 28419.35,
-      "gross_pnl": 34139.35,
-      "roi": 71.05,
-      "ending_equity": 68419.35,
-      "max_dd": -15.95,
-      "max_dd_inr": -12987.5,
-      "profit_factor": 3.19
+      "total_trades": 14,
+      "win_rate": 71.4,
+      "losing_trades": 4,
+      "net_pnl": 24544.0,
+      "gross_pnl": 30704.0,
+      "roi": 61.36,
+      "ending_equity": 64544.0,
+      "max_dd": -20.71,
+      "max_dd_inr": -16862.85,
+      "profit_factor": 2.46
     },
     "chart": {
       "dates": [
@@ -26,7 +26,8 @@
         "2026-06-12",
         "2026-06-19",
         "2026-09-02",
-        "2026-09-03"
+        "2026-09-03",
+        "2026-09-09"
       ],
       "roi": [
         9.45,
@@ -41,7 +42,8 @@
         103.52,
         94.17,
         81.59,
-        71.05
+        71.05,
+        61.36
       ],
       "drawdown": [
         0.0,
@@ -56,7 +58,8 @@
         0.0,
         -4.59,
         -10.77,
-        -15.95
+        -15.95,
+        -20.71
       ]
     },
     "trades": [
@@ -189,6 +192,16 @@
         "Net_Pts": -62.1,
         "Gross_PnL": -3776.47,
         "Net_PnL": -4216.47
+      },
+      {
+        "Date": "2026-09-09",
+        "Type": "Bull Put",
+        "ADX": 23.36,
+        "Status": "SL (Max Loss)",
+        "Gross_Pts": -52.85,
+        "Net_Pts": -56.85,
+        "Gross_PnL": -3435.35,
+        "Net_PnL": -3875.35
       }
     ]
   }
